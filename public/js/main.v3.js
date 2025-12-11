@@ -41,10 +41,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Loaded globally via script tag
 
+// Helper: Fallback for Static Deployment (Netlify)
+async function fetchWithFallback(endpoint) {
+    try {
+        const res = await fetch(`/api/${endpoint}`);
+        if (!res.ok) throw new Error("API not found");
+        return await res.json();
+    } catch (e) {
+        console.warn(`API /api/${endpoint} failed, trying static /data/${endpoint}.json`);
+        try {
+            const staticRes = await fetch(`/data/${endpoint}.json`);
+            return await staticRes.json();
+        } catch (staticErr) {
+            console.error("Static data load failed", staticErr);
+            return { success: false, data: [] };
+        }
+    }
+}
+
 async function initSocials() {
     try {
-        const res = await fetch('/api/socials');
-        const json = await res.json();
+        const json = await fetchWithFallback('socials');
         if (json.success && json.data.length) {
             const icons = json.data.map(s =>
                 `<a href="${s.url}" target="_blank" class="social-icon"><i class="fab ${s.icon}"></i></a>`
@@ -81,8 +98,7 @@ async function fetchAchievements() {
     console.log("fetchAchievements started (Vertical Timeline)");
     let items = [];
     try {
-        const res = await fetch('/api/achievements');
-        const data = await res.json();
+        const data = await fetchWithFallback('achievements');
         if (data.success && data.data.length) items = data.data;
     } catch (e) { console.warn(e); }
 
@@ -157,8 +173,7 @@ async function fetchAchievements() {
     console.log("fetchAchievements started (3D Carousel)");
     let items = [];
     try {
-        const res = await fetch('/api/achievements');
-        const data = await res.json();
+        const data = await fetchWithFallback('achievements');
         if (data.success && data.data.length) items = data.data;
     } catch (e) { console.warn(e); }
 
@@ -769,8 +784,7 @@ async function initAchievementsStream() {
 
     let items = [];
     try {
-        const res = await fetch('/api/achievements');
-        const data = await res.json();
+        const data = await fetchWithFallback('achievements');
         if (data.success && data.data.length) items = data.data;
     } catch (e) {
         console.warn("API Error (Achievements):", e);

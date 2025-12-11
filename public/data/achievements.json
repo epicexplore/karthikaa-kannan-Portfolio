@@ -1,0 +1,75 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "title": "Eureka Jr Finalist",
+      "description": "Top 0.04% finalist at one of India's premier entrepreneurship competitions hosted by IIT Bombay",
+      "year": 2024,
+      "highlight": 1,
+      "icon": "fa-trophy",
+      "link": "https://linkedin.com",
+      "created_at": "2025-12-11 02:16:25"
+    },
+    {
+      "id": 2,
+      "title": "Brand Ambassador - CODLYNX",
+      "description": "Representing a fast-growing 5-figure digital agency",
+      "year": 2024,
+      "highlight": 1,
+      "icon": "fa-bullhorn",
+      "link": "#",
+      "created_at": "2025-12-11 02:16:25"
+    },
+    {
+      "id": 3,
+      "title": "Featured in CampusTalk UAE Newsletter",
+      "description": "Journey featured in prominent educational newsletter",
+      "year": 2024,
+      "highlight": 0,
+      "icon": "fa-newspaper",
+      "link": "#",
+      "created_at": "2025-12-11 02:16:25"
+    },
+    {
+      "id": 4,
+      "title": "100+ Projects Delivered",
+      "description": "Successfully completed over 100 creative projects across various niches",
+      "year": 2024,
+      "highlight": 0,
+      "icon": "fa-project-diagram",
+      "link": "#",
+      "created_at": "2025-12-11 02:16:25"
+    },
+    {
+      "id": 5,
+      "title": "Featured in Tech Magazine",
+      "description": "Portfolio featured in leading tech publication for innovative design",
+      "year": 2024,
+      "highlight": 1,
+      "icon": "fa-newspaper",
+      "link": "https://example.com",
+      "created_at": "2025-12-11 02:16:25"
+    },
+    {
+      "id": 6,
+      "title": "500+ Community Members",
+      "description": "Built thriving student community across social platforms",
+      "year": 2023,
+      "highlight": 0,
+      "icon": "fa-users",
+      "link": "#",
+      "created_at": "2025-12-11 02:16:25"
+    },
+    {
+      "id": 7,
+      "title": "Award-Winning Designer",
+      "description": "Recognized for excellence in modern web design and creative branding",
+      "year": 2024,
+      "highlight": 1,
+      "icon": "fa-award",
+      "link": "#",
+      "created_at": "2025-12-11 02:16:25"
+    }
+  ]
+}

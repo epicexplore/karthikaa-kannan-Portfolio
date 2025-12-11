@@ -4,8 +4,16 @@
  */
 async function loadSEO() {
     try {
-        const res = await fetch('/api/settings');
-        const json = await res.json();
+        let json;
+        try {
+            const res = await fetch('/api/settings');
+            if (!res.ok) throw new Error("API not found");
+            json = await res.json();
+        } catch (apiErr) {
+            console.warn('API /api/settings failed, trying /data/settings.json');
+            const staticRes = await fetch('/data/settings.json');
+            json = await staticRes.json();
+        }
 
         if (json.success) {
             const s = json.data;
