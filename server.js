@@ -208,9 +208,14 @@ app.post('/api/settings', isAuthenticated, (req, res) => {
     res.json({ success: true });
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`\n🚀 Server running on http://localhost:${PORT}`);
-    console.log(`📁 Serving static files from 'public' directory`);
-    console.log(`💾 Database: JSON (db/portfolio_data.json)\n`);
-});
+// Export for Serverless
+module.exports = app;
+
+// Only start server if NOT running as a Lambda (Local/cPanel)
+if (!process.env.LAMBDA_TASK_ROOT) {
+    app.listen(PORT, () => {
+        console.log(`\n🚀 Server running on http://localhost:${PORT}`);
+        console.log(`📁 Serving static files from 'public' directory`);
+        console.log(`💾 Database: JSON (db/portfolio_data.json)\n`);
+    });
+}

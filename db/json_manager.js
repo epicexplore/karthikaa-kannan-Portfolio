@@ -31,7 +31,13 @@ class JsonDB {
     }
 
     save() {
-        fs.writeFileSync(DB_FILE, JSON.stringify(this.data, null, 2));
+        try {
+            fs.writeFileSync(DB_FILE, JSON.stringify(this.data, null, 2));
+        } catch (e) {
+            console.warn("Write failed (ReadOnly FS or Lock):", e.message);
+            // In Serverless/Netlify, this will fail. We allow it to fail silently 
+            // so the app doesn't crash, but data won't persist.
+        }
     }
 
     // --- GENERIC HELPERS ---
