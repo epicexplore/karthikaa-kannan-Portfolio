@@ -5,8 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const path = require('path');
-const db = require('./db/database');
+const db = require('./db/json_manager'); // CHANGED: Use JSON Manager
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -58,22 +57,16 @@ app.post('/api/login', (req, res) => {
     }
 
     // 2. Check Database Users
-    db.get('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (err, row) => {
-        if (err) return res.status(500).json({ success: false, error: err.message });
+    const user = db.findUser(username, password);
 
-        if (row) {
-            req.session.isAdmin = true;
-            req.session.username = row.username;
-            res.json({ success: true });
-        } else {
-            res.status(401).json({ success: false, error: 'Invalid credentials' });
-        }
-    });
+    if (user) {
+        req.session.isAdmin = true;
+        req.session.username = user.username;
+        res.json({ success: true });
+    } else {
+        res.status(401).json({ success: false, error: 'Invalid credentials' });
+    }
 });
-
-/* 
-// Old Login Route Removed - Consolidated Above
-*/
 
 app.post('/api/logout', (req, res) => {
     req.session.destroy();
@@ -84,35 +77,26 @@ app.post('/api/logout', (req, res) => {
 
 // GET all achievements
 app.get('/api/achievements', (req, res) => {
-    db.all('SELECT * FROM achievements ORDER BY year DESC, created_at DESC', [], (err, rows) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-            return;
-        }
-        res.json({ success: true, data: rows });
-    });
+    const rows = db.getAll('achievements');
+    // Sort: year DESC
+    rows.sort((a, b) => b.year - a.year);
+    res.json({ success: true, data: rows });
 });
 
 // POST new achievement
 app.post('/api/achievements', isAuthenticated, (req, res) => {
     const { title, description, year, highlight, icon, link } = req.body;
 
-    if (!title) {
-        return res.status(400).json({ success: false, error: 'Title is required' });
-    }
+    if (!title) return res.status(400).json({ success: false, error: 'Title is required' });
 
-    const sql = 'INSERT INTO achievements (title, description, year, highlight, icon, link) VALUES (?, ?, ?, ?, ?, ?)';
-    db.run(sql, [title, description, year, highlight ? 1 : 0, icon || 'fa-trophy', link || '#'], function (err) {
-        if (err) {
-            res.status(500).json({ success: false, error: err.message });
-            return;
-        }
-        res.json({
-            success: true,
-            message: 'Achievement created successfully',
-            id: this.lastID
-        });
+    const id = db.add('achievements', {
+        title, description, year,
+        highlight: highlight ? 1 : 0,
+        icon: icon || 'fa-trophy',
+        link: link || '#'
     });
+
+    res.json({ success: true, message: 'Achievement created successfully', id });
 });
 
 // PUT update achievement
@@ -120,209 +104,113 @@ app.put('/api/achievements/:id', isAuthenticated, (req, res) => {
     const { id } = req.params;
     const { title, description, year, highlight, icon, link } = req.body;
 
-    if (!title) {
-        return res.status(400).json({ success: false, error: 'Title is required' });
-    }
+    if (!title) return res.status(400).json({ success: false, error: 'Title is required' });
 
-    const sql = 'UPDATE achievements SET title = ?, description = ?, year = ?, highlight = ?, icon = ?, link = ? WHERE id = ?';
-    db.run(sql, [title, description, year, highlight ? 1 : 0, icon || 'fa-trophy', link || '#', id], function (err) {
-        if (err) {
-            res.status(500).json({ success: false, error: err.message });
-            return;
-        }
-        if (this.changes === 0) {
-            res.status(404).json({ success: false, error: 'Achievement not found' });
-            return;
-        }
-        res.json({ success: true, message: 'Achievement updated successfully' });
+    const success = db.update('achievements', id, {
+        title, description, year,
+        highlight: highlight ? 1 : 0,
+        icon: icon || 'fa-trophy',
+        link: link || '#'
     });
+
+    if (!success) return res.status(404).json({ success: false, error: 'Achievement not found' });
+    res.json({ success: true, message: 'Achievement updated successfully' });
 });
 
 // DELETE achievement
 app.delete('/api/achievements/:id', isAuthenticated, (req, res) => {
-    const { id } = req.params;
-
-    db.run('DELETE FROM achievements WHERE id = ?', [id], function (err) {
-        if (err) {
-            res.status(500).json({ success: false, error: err.message });
-            return;
-        }
-        if (this.changes === 0) {
-            res.status(404).json({ success: false, error: 'Achievement not found' });
-            return;
-        }
-        res.json({ success: true, message: 'Achievement deleted successfully' });
-    });
+    const success = db.delete('achievements', req.params.id);
+    if (!success) return res.status(404).json({ success: false, error: 'Achievement not found' });
+    res.json({ success: true, message: 'Achievement deleted successfully' });
 });
 
 // ==================== TESTIMONIALS API ====================
 
-// GET all testimonials
 app.get('/api/testimonials', (req, res) => {
-    db.all('SELECT * FROM testimonials ORDER BY created_at DESC', [], (err, rows) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-            return;
-        }
-        res.json({ success: true, data: rows });
-    });
+    const rows = db.getAll('testimonials');
+    res.json({ success: true, data: rows });
 });
 
-// POST new testimonial
 app.post('/api/testimonials', isAuthenticated, (req, res) => {
     const { name, role, message, rating } = req.body;
+    if (!name || !message) return res.status(400).json({ success: false, error: 'Name required' });
 
-    if (!name || !message) {
-        return res.status(400).json({ success: false, error: 'Name and message are required' });
-    }
-
-    const sql = 'INSERT INTO testimonials (name, role, message, rating) VALUES (?, ?, ?, ?)';
-    db.run(sql, [name, role, message, rating || 5], function (err) {
-        if (err) {
-            res.status(500).json({ success: false, error: err.message });
-            return;
-        }
-        res.json({
-            success: true,
-            message: 'Testimonial created successfully',
-            id: this.lastID
-        });
-    });
+    const id = db.add('testimonials', { name, role, message, rating: rating || 5 });
+    res.json({ success: true, message: 'Testimonial created', id });
 });
 
-// PUT update testimonial
 app.put('/api/testimonials/:id', isAuthenticated, (req, res) => {
     const { id } = req.params;
     const { name, role, message, rating } = req.body;
+    if (!name || !message) return res.status(400).json({ success: false, error: 'Name required' });
 
-    if (!name || !message) {
-        return res.status(400).json({ success: false, error: 'Name and message are required' });
-    }
-
-    const sql = 'UPDATE testimonials SET name = ?, role = ?, message = ?, rating = ? WHERE id = ?';
-    db.run(sql, [name, role, message, rating || 5, id], function (err) {
-        if (err) {
-            res.status(500).json({ success: false, error: err.message });
-            return;
-        }
-        if (this.changes === 0) {
-            res.status(404).json({ success: false, error: 'Testimonial not found' });
-            return;
-        }
-        res.json({ success: true, message: 'Testimonial updated successfully' });
-    });
+    const success = db.update('testimonials', id, { name, role, message, rating: rating || 5 });
+    if (!success) return res.status(404).json({ success: false, error: 'Not found' });
+    res.json({ success: true, message: 'Updated' });
 });
 
-// DELETE testimonial
 app.delete('/api/testimonials/:id', isAuthenticated, (req, res) => {
-    const { id } = req.params;
-
-    db.run('DELETE FROM testimonials WHERE id = ?', [id], function (err) {
-        if (err) {
-            res.status(500).json({ success: false, error: err.message });
-            return;
-        }
-        if (this.changes === 0) {
-            res.status(404).json({ success: false, error: 'Testimonial not found' });
-            return;
-        }
-        res.json({ success: true, message: 'Testimonial deleted successfully' });
-    });
+    const success = db.delete('testimonials', req.params.id);
+    if (!success) return res.status(404).json({ success: false, error: 'Not found' });
+    res.json({ success: true, message: 'Deleted' });
 });
 
 // ==================== SOCIALS API ====================
 
 app.get('/api/socials', (req, res) => {
-    db.all('SELECT * FROM socials ORDER BY created_at ASC', [], (err, rows) => {
-        if (err) return res.status(500).json({ success: false, error: err.message });
-        res.json({ success: true, data: rows });
-    });
+    res.json({ success: true, data: db.getAll('socials') });
 });
 
 app.post('/api/socials', isAuthenticated, (req, res) => {
     const { platform, url, icon } = req.body;
-    db.run('INSERT INTO socials (platform, url, icon) VALUES (?, ?, ?)', [platform, url, icon], function (err) {
-        if (err) return res.status(500).json({ success: false, error: err.message });
-        res.json({ success: true, id: this.lastID });
-    });
+    const id = db.add('socials', { platform, url, icon });
+    res.json({ success: true, id });
 });
 
 app.delete('/api/socials/:id', isAuthenticated, (req, res) => {
-    db.run('DELETE FROM socials WHERE id = ?', [req.params.id], function (err) {
-        if (err) return res.status(500).json({ success: false, error: err.message });
-        res.json({ success: true });
-    });
+    db.delete('socials', req.params.id);
+    res.json({ success: true });
 });
 
 app.put('/api/socials/:id', isAuthenticated, (req, res) => {
     const { platform, url, icon } = req.body;
-    db.run('UPDATE socials SET platform = ?, url = ?, icon = ? WHERE id = ?', [platform, url, icon, req.params.id], function (err) {
-        if (err) return res.status(500).json({ success: false, error: err.message });
-        res.json({ success: true });
-    });
+    db.update('socials', req.params.id, { platform, url, icon });
+    res.json({ success: true });
 });
 
 // ==================== USERS API ====================
 
 app.get('/api/users', isAuthenticated, (req, res) => {
-    // Security: Don't return passwords
-    db.all('SELECT id, username, created_at FROM users ORDER BY created_at DESC', [], (err, rows) => {
-        if (err) return res.status(500).json({ success: false, error: err.message });
-        res.json({ success: true, data: rows });
-    });
+    // Return safe data
+    const users = db.getAll('users').map(u => ({ id: u.id, username: u.username, created_at: u.created_at }));
+    res.json({ success: true, data: users });
 });
 
 app.post('/api/users', isAuthenticated, (req, res) => {
     const { username, password } = req.body;
-    // Basic duplication check
-    db.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, password], function (err) {
-        if (err) return res.status(500).json({ success: false, error: err.message });
-        res.json({ success: true, id: this.lastID });
-    });
+    const id = db.add('users', { username, password });
+    res.json({ success: true, id });
 });
 
 app.delete('/api/users/:id', isAuthenticated, (req, res) => {
-    // Prevent self-deletion if there's only 1 admin? For now, allow simple delete.
-    db.run('DELETE FROM users WHERE id = ?', [req.params.id], function (err) {
-        if (err) return res.status(500).json({ success: false, error: err.message });
-        res.json({ success: true });
-    });
+    db.delete('users', req.params.id);
+    res.json({ success: true });
 });
 
-// ==================== SETTINGS API (SEO) ====================
+// ==================== SETTINGS API ====================
 
 app.get('/api/settings', (req, res) => {
-    db.all('SELECT * FROM settings', [], (err, rows) => {
-        if (err) return res.status(500).json({ success: false, error: err.message });
-        // Transform array to object { key: value }
-        const settings = {};
-        rows.forEach(row => settings[row.key] = row.value);
-        res.json({ success: true, data: settings });
-    });
+    res.json({ success: true, data: db.getSettings() });
 });
 
 app.post('/api/settings', isAuthenticated, (req, res) => {
-    const settings = req.body; // Expects { seo_title: 'Val', ... }
-    const stmt = db.prepare('INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)');
-
-    db.serialize(() => {
-        db.run('BEGIN TRANSACTION');
-        Object.keys(settings).forEach(key => {
-            stmt.run(key, settings[key]);
-        });
-        db.run('COMMIT', (err) => {
-            if (err) return res.status(500).json({ success: false, error: err.message });
-            res.json({ success: true });
-        });
-        stmt.finalize();
-    });
+    db.setSettings(req.body);
+    res.json({ success: true });
 });
-
-// Login logic is now consolidated at the top.
 
 // Start server
 app.listen(PORT, () => {
     console.log(`\n🚀 Server running on http://localhost:${PORT}`);
     console.log(`📁 Serving static files from 'public' directory`);
-    console.log(`💾 Database: SQLite (db/portfolio.db)\n`);
+    console.log(`💾 Database: JSON (db/portfolio_data.json)\n`);
 });
