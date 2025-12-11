@@ -1,0 +1,1246 @@
+/* =========================================
+   1. VARIABLES & RESET (Replica Theme)
+   ========================================= */
+:root {
+    --bg-black: #000000;
+    --text-white: #ffffff;
+    --text-grey: #a1a1aa;
+    --border-color: #333333;
+    --card-bg: #050505;
+    /* Extremely dark grey */
+    --accent-glow: rgba(255, 255, 255, 0.1);
+    --font-primary: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background-color: var(--bg-black);
+    color: var(--text-white);
+    font-family: var(--font-primary);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    border-radius: 12px;
+}
+
+/* =========================================
+   2. HEADER (Replica)
+   ========================================= */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1.5rem 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.05em;
+    color: #fff;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.nav-links a {
+    font-size: 0.95rem;
+    color: #ccc;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.nav-links a:hover {
+    color: #fff;
+}
+
+.btn-pill-white {
+    background: #fff;
+    color: #000;
+    padding: 0.7rem 1.8rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-block;
+}
+
+.btn-pill-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}
+
+.mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+/* =========================================
+   3. HERO (Replica)
+   ========================================= */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.greeting {
+    font-size: 1.2rem;
+    color: #ccc;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* HERO TYPOGRAPHY & LAYOUT */
+.hero-content {
+    transform-style: preserve-3d;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    /* Reduced Size */
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 1rem 0;
+    background: linear-gradient(to right, #fff, #999);
+    /* B&W Gradient */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    /* Reduced Size */
+    color: #888;
+    /* B&W: Gray */
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.hero-bio {
+    font-size: 1rem;
+    /* Reduced Size */
+    color: #bbb;
+    line-height: 1.6;
+    max-width: 550px;
+    margin-bottom: 3rem;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    align-items: center;
+}
+
+.social-icon {
+    font-size: 1.5rem;
+    color: #888;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.social-icon:hover {
+    color: #fff;
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+}
+
+.highlight {
+    background: linear-gradient(45deg, #ffffff, #666666);
+    /* B&W: Silver Highlight */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Responsive Grid */
+@media (max-width: 900px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 3rem;
+    }
+
+    .hero-content {
+        align-items: center;
+        /* Center flex items */
+    }
+
+    .hero-bio {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-image {
+        justify-content: center;
+        order: -1;
+        /* Image on top for mobile */
+    }
+
+    .portrait {
+        max-width: 60%;
+        /* Smaller image on mobile */
+    }
+}
+
+.hero-tagline span {
+    color: #fff;
+}
+
+/* Highlight word if needed */
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 4rem;
+}
+
+.btn-pill-outline {
+    background: transparent;
+    color: #fff;
+    padding: 0.7rem 1.8rem;
+    border-radius: 50px;
+    font-weight: 600;
+    border: 1px solid #333;
+    transition: 0.2s;
+}
+
+.btn-pill-outline:hover {
+    border-color: #fff;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 4rem;
+    border-top: 1px solid #222;
+    padding-top: 2rem;
+}
+
+.stat-num {
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: block;
+}
+
+.stat-lbl {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.hero-image {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.portrait {
+    max-height: 600px;
+    filter: grayscale(100%);
+}
+
+/* =========================================
+   4. SECTIONS (Replica)
+   ========================================= */
+.section {
+    padding: 6rem 0;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.section-sub {
+    text-align: center;
+    color: #888;
+    margin-bottom: 4rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* About Grid */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+    align-items: flex-start;
+}
+
+.lead-white {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #fff;
+}
+
+.about-text p {
+    color: #aaa;
+    margin-bottom: 1.5rem;
+}
+
+.about-icons {
+    margin: 2rem 0;
+}
+
+.icon-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: #ddd;
+}
+
+.icon-row i {
+    color: #fff;
+    width: 20px;
+    text-align: center;
+}
+
+.quote-box {
+    border-left: 2px solid #fff;
+    padding-left: 1.5rem;
+    margin-top: 2rem;
+    font-style: italic;
+    color: #ccc;
+}
+
+.card-dark {
+    background: #0a0a0a;
+    border: 1px solid #222;
+    border-radius: 16px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.kk-big {
+    font-size: 5rem;
+    font-weight: 800;
+    color: #222;
+}
+
+/* =========================================
+   6. JOURNEY (Horizontal Card Scroll)
+   ========================================= */
+.journey-section-pin {
+    padding: 6rem 0;
+    overflow: hidden;
+    background: #000;
+}
+
+.journey-track-wrapper {
+    margin-top: 4rem;
+    overflow: hidden;
+    /* Removed padding-left to allow start alignment via js/css */
+}
+
+.journey-track {
+    display: flex;
+    gap: 4rem;
+    width: max-content;
+    /* Important for GSAP */
+    padding-left: 5vw;
+    /* Start offset */
+    padding-right: 10vw;
+}
+
+.journey-card {
+    width: 600px;
+    height: 380px;
+    background: #050505;
+    border: 1px solid #1a1a1a;
+    border-radius: 4px;
+    /* Brutalist feel */
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    /* Masking Animation Target */
+    /* clip-path: inset(0 100% 0 0); Hidden initially, reveals right */
+    transition: all 0.3s;
+}
+
+.journey-card:hover {
+    border-color: #fff;
+    background: #0a0a0a;
+}
+
+.j-year {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 1rem;
+    display: inline-block;
+    width: 100%;
+}
+
+.j-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #fff;
+    margin-top: 1.5rem;
+    background: linear-gradient(to right, #fff, #666);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.j-desc {
+    color: #888;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-top: 1rem;
+    max-width: 90%;
+}
+
+.j-num {
+    position: absolute;
+    bottom: 2rem;
+    right: 3rem;
+    font-size: 4rem;
+    font-weight: 800;
+    color: #111;
+    z-index: 0;
+}
+
+/* Response */
+@media (max-width: 900px) {
+    .journey-card {
+        width: 85vw;
+        height: auto;
+        padding: 2rem;
+    }
+
+    .j-title {
+        font-size: 2rem;
+    }
+}
+
+body {
+    cursor: none;
+}
+
+/* Hide default cursor */
+
+#cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    transition: width 0.3s, height 0.3s, background 0.3s, mix-blend-mode 0.3s;
+    mix-blend-mode: difference;
+}
+
+#cursor-blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05), transparent 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9998;
+}
+
+a:hover~#cursor,
+button:hover~#cursor,
+.service-card-3d:hover~#cursor {
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    mix-blend-mode: overlay;
+}
+
+/* Holographic Card Upgrade */
+.service-card-3d {
+    /* Existing basic styles... */
+    width: 400px;
+    height: 500px;
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid #333;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.1s;
+    /* Faster for mouse tracking */
+    user-select: none;
+    transform-style: preserve-3d;
+}
+
+/* The Shine Effect */
+.service-card-3d::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(255, 255, 255, 0.06), transparent 40%);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.service-card-3d:hover::before {
+    opacity: 1;
+}
+
+.service-card-3d::after {
+    /* Border Glow */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(255, 255, 255, 0.3), transparent 40%);
+    z-index: -1;
+}
+
+/* =========================================
+   7. ACHIEVEMENTS & TESTIMONIALS & CONTACT
+   ========================================= */
+
+/* ACHIEVEMENTS MARQUEE (New Design) */
+.achievements-marquee-wrapper {
+    margin-top: 4rem;
+    overflow-x: auto;
+    /* Enable Manual Scroll */
+    white-space: nowrap;
+    width: 100%;
+    position: relative;
+    padding-bottom: 2rem;
+    /* Space for scrollbar */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+}
+
+/* Hide scrollbar for cleaner look */
+.achievements-marquee-wrapper::-webkit-scrollbar {
+    height: 8px;
+    background: #111;
+}
+
+.achievements-marquee-wrapper::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+/* =========================================
+   7. ACHIEVEMENTS (VERTICAL TIMELINE)
+   ========================================= */
+.achievements-section {
+    position: relative;
+    padding: 4rem 0;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* The Central Line */
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, #444, #444, transparent);
+    transform: translateX(-50%);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.timeline-item {
+    position: relative;
+    width: 50%;
+    padding: 2rem 3rem;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+/* Alternating Sides */
+.timeline-item:nth-child(odd) {
+    left: 0;
+    text-align: right;
+}
+
+.timeline-item:nth-child(even) {
+    left: 50%;
+    text-align: left;
+}
+
+/* The Dot */
+.timeline-dot {
+    position: absolute;
+    top: 2.5rem;
+    width: 20px;
+    height: 20px;
+    background: #000;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    z-index: 10;
+    box-shadow: 0 0 10px #fff;
+    transition: transform 0.3s;
+}
+
+.timeline-item:nth-child(odd) .timeline-dot {
+    right: -11px;
+}
+
+.timeline-item:nth-child(even) .timeline-dot {
+    left: -11px;
+}
+
+.timeline-item:hover .timeline-dot {
+    transform: scale(1.5);
+    background: #fff;
+}
+
+/* The Card */
+.timeline-content {
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 12px;
+    transition: transform 0.3s, border-color 0.3s;
+    position: relative;
+}
+
+.timeline-content:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.t-year {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.t-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.t-title {
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+}
+
+.t-desc {
+    font-size: 0.95rem;
+    color: #aaa;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.t-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.8rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    transition: all 0.3s;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.t-link:hover {
+    background: #fff;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}
+
+.t-link i {
+    transition: transform 0.3s;
+}
+
+.t-link:hover i {
+    transform: translateX(4px);
+}
+
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .timeline-line {
+        left: 30px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        left: 0 !important;
+        text-align: left !important;
+        padding-left: 80px;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-dot,
+    .timeline-item:nth-child(even) .timeline-dot {
+        left: 20px;
+        right: auto;
+    }
+}
+
+/* Achievement Card Modern */
+.achievement-card-modern {
+    width: 350px;
+    background: #0a0a0a;
+    border: 1px solid #222;
+    padding: 2rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s, border-color 0.3s;
+    height: 380px;
+    /* Fixed height for uniformity */
+}
+
+.achievement-card-modern:hover {
+    transform: translateY(-5px);
+    border-color: #fff;
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+}
+
+.ac-icon {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 2rem;
+}
+
+.ac-header {
+    margin-bottom: 2rem;
+}
+
+.ac-year {
+    font-size: 0.8rem;
+    color: #666;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.ac-title {
+    font-size: 1.4rem;
+    color: #fff;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.ac-desc {
+    font-size: 0.95rem;
+    color: #888;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+}
+
+.ac-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 2px;
+    width: max-content;
+    transition: all 0.3s;
+}
+
+.ac-link:hover {
+    border-bottom-color: #fff;
+    gap: 0.8rem;
+}
+
+/* =========================================
+   4. ABOUT (Storytelling & Masking)
+   ========================================= */
+.about-section {
+    padding: 8rem 0;
+    background: #050505;
+    overflow: hidden;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    /* Image narrower */
+    gap: 6rem;
+    align-items: start;
+}
+
+/* Image Parallax */
+.about-image-wrapper {
+    position: relative;
+    top: 2rem;
+    /* Initial offset */
+}
+
+.about-portrait {
+    width: 100%;
+    border-radius: 2px;
+    filter: grayscale(100%) contrast(1.1);
+    transition: filter 0.5s;
+}
+
+.about-portrait:hover {
+    filter: grayscale(0%);
+}
+
+/* Story Content */
+.story-flow {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 3rem;
+}
+
+.story-block {
+    position: relative;
+}
+
+/* Modern 3D Icon (Floating) */
+.icon-3d {
+    position: absolute;
+    left: -5.5rem;
+    /* Hang off the border */
+    top: 0;
+    width: 3rem;
+    height: 3rem;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.story-text {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #ccc;
+    margin: 0;
+}
+
+.highlight-text {
+    color: #fff;
+    font-weight: 600;
+    border-bottom: 1px solid #fff;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .story-flow {
+        padding-left: 2rem;
+    }
+
+    .icon-3d {
+        left: -3.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+    }
+}
+
+.services-pin-wrapper {
+    overflow: hidden;
+    background: #000;
+    position: relative;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    cursor: none;
+}
+
+.services-track-container {
+    width: 100%;
+    margin-top: 0;
+    perspective: 2000px;
+    /* Deep perspective for 3D spin */
+}
+
+.services-track {
+    display: flex;
+    gap: 6rem;
+    width: max-content;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    will-change: transform;
+    align-items: center;
+}
+
+.service-card-3d {
+    width: 400px;
+    height: 550px;
+    background: linear-gradient(145deg, #111, #050505);
+    border: 1px solid #333;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+    user-select: none;
+    transform-style: preserve-3d;
+    /* For parallax children */
+}
+
+.card-inner {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    z-index: 2;
+    position: relative;
+}
+
+.service-card-3d:hover {
+    border-color: #fff;
+    box-shadow: 0 20px 50px rgba(255, 255, 255, 0.05);
+}
+
+/* Modern Icons (Sphere glow) */
+.icon-sphere {
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle at 30% 30%, #444, #000);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #fff;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1), 0 10px 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 2rem;
+    position: relative;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.service-card-3d:hover .icon-sphere {
+    transform: scale(1.1) translateZ(50px);
+    /* Pop out */
+    background: radial-gradient(circle at 30% 30%, #fff, #888);
+    color: #000;
+}
+
+/* Typography */
+.char-animate {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    transform: translateZ(30px);
+}
+
+.service-card-3d p {
+    color: #888;
+    font-size: 1rem;
+    transform: translateZ(20px);
+}
+
+.card-num {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    font-size: 4rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.03);
+    z-index: 1;
+}
+
+/* Journey Timeline */
+.timeline {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    border-left: 2px solid #222;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 4rem;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -2.35rem;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    background: #000;
+    border: 2px solid #fff;
+    border-radius: 50%;
+}
+
+.timeline-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-badge {
+    background: #111;
+    color: #fff;
+    padding: 0.2rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.timeline-desc {
+    color: #aaa;
+    font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .nav-links {
+        display: none;
+    }
+
+    .mobile-toggle {
+        display: block;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .hero-buttons,
+    .hero-stats {
+        justify-content: center;
+    }
+
+    .hero-image {
+        justify-content: center;
+        margin-top: 3rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-dark {
+        height: 200px;
+    }
+}
+
+/* =========================================
+   8. TESTIMONIALS (PARALLAX MARQUEE)
+   ========================================= */
+.testimonial-marquee-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    overflow: hidden;
+    padding: 4rem 0;
+    position: relative;
+    /* Fade Masks */
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.marquee-row {
+    display: flex;
+    gap: 2rem;
+    width: max-content;
+    will-change: transform;
+}
+
+.testimonial-card-parallax {
+    width: 400px;
+    background: rgba(20, 20, 20, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2.5rem;
+    flex-shrink: 0;
+    transition: all 0.3s;
+    user-select: none;
+    transform-style: preserve-3d;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.testimonial-card-parallax:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(30, 30, 30, 0.9);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    transform: scale(1.02);
+    /* Local hover effect */
+}
+
+.t-quote-icon {
+    font-size: 2rem;
+    color: #444;
+    margin-bottom: 1.5rem;
+}
+
+.t-msg {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #ccc;
+    font-style: italic;
+    margin-bottom: 2rem;
+    min-height: 80px;
+    /* Uniformity */
+}
+
+.t-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.t-avatar {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(45deg, #333, #111);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    border: 1px solid #444;
+}
+
+.t-info h4 {
+    margin: 0;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.t-info span {
+    color: #666;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

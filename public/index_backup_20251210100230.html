@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karthikaa Kannan | UPDATED</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS (Cache Busted) -->
+    <link rel="stylesheet" href="css/style.v3.css?v=FIX_FINAL">
+    <link rel="stylesheet" href="css/footer.css?v=FIX_FINAL">
+    <link rel="stylesheet" href="css/motion-ui.css?v=FIX_FINAL">
+    <link rel="stylesheet" href="css/skills.css?v=1">
+</head>
+
+<body>
+
+
+
+
+    <style>
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 700;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Marquee Styles */
+        .marquee-section {
+            padding: 6rem 0;
+            background: #000;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+            perspective: 1000px;
+            /* 3D Depth */
+            transform-style: preserve-3d;
+        }
+
+        .marquee-content {
+            display: flex;
+            white-space: nowrap;
+            will-change: transform;
+            transform-style: preserve-3d;
+        }
+
+        .marquee-text {
+            font-size: 7vw;
+            font-weight: 800;
+            color: transparent;
+            -webkit-text-stroke: 1px #666;
+            text-transform: uppercase;
+            padding-right: 4rem;
+            opacity: 1;
+            display: inline-block;
+            transform-origin: center center;
+            text-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+        }
+
+        .marquee-text span {
+            color: #fff;
+            display: inline-block;
+            /* For individual animation */
+        }
+    </style>
+    </head>
+
+    <body>
+
+        <!-- Three.js Background -->
+        <canvas id="bg-canvas"></canvas>
+
+        <!-- Preloader -->
+        <div class="loader" id="loader">
+            <div class="logo">KK.</div>
+        </div>
+
+        <!-- Custom Cursor -->
+        <div id="cursor"></div>
+        <div id="cursor-blur"></div>
+
+        <!-- Header Removed -->
+
+        <main>
+
+            <!-- Hero Section -->
+            <section class="hero" id="home">
+                <div class="container hero-grid">
+                    <div class="hero-content">
+                        <span class="greeting shimmer-text">Welcome</span>
+                        <h1 class="hero-title">
+                            <span class="word">Hi,</span> <span class="word">I'm</span> <span
+                                class="word highlight">Karthikaa</span> <span class="word">Kannan</span>
+                        </h1>
+                        <h2 class="hero-subtitle">Entrepreneur, Content Creator & Freelancer</h2>
+                        <p class="hero-bio">
+                            Bringing ideas to life through visuals, stories, and strategy — I empower brands,
+                            businesses, and individuals to thrive at the intersection of creativity and
+                            technology...
+                        </p>
+                        <div class="hero-cta hero-socials">
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:hello@example.com" class="social-icon"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- 3D Tilt Target -->
+                    <div class="hero-image" data-tilt>
+                        <img src="images/hero_portrait.png" alt="Karthikaa Kannan" class="portrait">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Marquee Transition (Parallel X Effect) -->
+            <div class="marquee-section">
+                <div class="marquee-content" id="marquee-text">
+                    <span class="marquee-text">Web Developer • <span>Designer</span> • Entrepreneur •
+                        <span>Innovator</span>
+                        • Content Creator • </span>
+                    <span class="marquee-text">Web Developer • <span>Designer</span> • Entrepreneur •
+                        <span>Innovator</span>
+                        • Content Creator • </span>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <section class="skills-section section" id="skills">
+                <div class="skills-container">
+                    <!-- Header -->
+                    <div class="skills-header">
+                        <h2>My Skills</h2>
+                        <p>My skills are the result of passion, persistence, and a commitment to learning from every
+                            opportunity I get.</p>
+                    </div>
+
+                    <!-- SVG Gradients Definition -->
+                    <svg width="0" height="0" style="position: absolute;">
+                        <defs>
+                            <linearGradient id="skillGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+
+                    <!-- Skills Grid -->
+                    <div class="skills-grid">
+                        <!-- Technical Skills -->
+                        <div class="skill-category" data-category="technical">
+                            <h3>Technical Skills</h3>
+
+                            <div class="skill-item" data-percent="90">
+                                <div class="skill-progress">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle class="skill-progress-bg" cx="50" cy="50" r="40"></circle>
+                                        <circle class="skill-progress-fill" cx="50" cy="50" r="40" data-skill-circle>
+                                        </circle>
+                                    </svg>
+                                    <div class="skill-progress-text">90%</div>
+                                </div>
+                                <div class="skill-info">
+                                    <h4 class="skill-name">Social Media Management & Marketing</h4>
+                                </div>
+                            </div>
+
+                            <div class="skill-item" data-percent="95">
+                                <div class="skill-progress">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle class="skill-progress-bg" cx="50" cy="50" r="40"></circle>
+                                        <circle class="skill-progress-fill" cx="50" cy="50" r="40" data-skill-circle>
+                                        </circle>
+                                    </svg>
+                                    <div class="skill-progress-text">95%</div>
+                                </div>
+                                <div class="skill-info">
+                                    <h4 class="skill-name">Script Writing & Content Writing</h4>
+                                </div>
+                            </div>
+
+                            <div class="skill-item" data-percent="90">
+                                <div class="skill-progress">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle class="skill-progress-bg" cx="50" cy="50" r="40"></circle>
+                                        <circle class="skill-progress-fill" cx="50" cy="50" r="40" data-skill-circle>
+                                        </circle>
+                                    </svg>
+                                    <div class="skill-progress-text">90%</div>
+                                </div>
+                                <div class="skill-info">
+                                    <h4 class="skill-name">Video Editing & Video Creation</h4>
+                                </div>
+                            </div>
+
+                            <div class="skill-item" data-percent="80">
+                                <div class="skill-progress">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle class="skill-progress-bg" cx="50" cy="50" r="40"></circle>
+                                        <circle class="skill-progress-fill" cx="50" cy="50" r="40" data-skill-circle>
+                                        </circle>
+                                    </svg>
+                                    <div class="skill-progress-text">80%</div>
+                                </div>
+                                <div class="skill-info">
+                                    <h4 class="skill-name">Graphic Designing, Logo & Branding</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Professional Skills -->
+                        <div class="skill-category" data-category="professional">
+                            <h3>Professional Skills</h3>
+
+                            <div class="skill-item" data-percent="95">
+                                <div class="skill-progress">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle class="skill-progress-bg" cx="50" cy="50" r="40"></circle>
+                                        <circle class="skill-progress-fill" cx="50" cy="50" r="40" data-skill-circle>
+                                        </circle>
+                                    </svg>
+                                    <div class="skill-progress-text">95%</div>
+                                </div>
+                                <div class="skill-info">
+                                    <h4 class="skill-name">Communication & Public Speaking</h4>
+                                </div>
+                            </div>
+
+                            <div class="skill-item" data-percent="90">
+                                <div class="skill-progress">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle class="skill-progress-bg" cx="50" cy="50" r="40"></circle>
+                                        <circle class="skill-progress-fill" cx="50" cy="50" r="40" data-skill-circle>
+                                        </circle>
+                                    </svg>
+                                    <div class="skill-progress-text">90%</div>
+                                </div>
+                                <div class="skill-info">
+                                    <h4 class="skill-name">Problem Solving & Decision Making</h4>
+                                </div>
+                            </div>
+
+                            <div class="skill-item" data-percent="100">
+                                <div class="skill-progress">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle class="skill-progress-bg" cx="50" cy="50" r="40"></circle>
+                                        <circle class="skill-progress-fill" cx="50" cy="50" r="40" data-skill-circle>
+                                        </circle>
+                                    </svg>
+                                    <div class="skill-progress-text">100%</div>
+                                </div>
+                                <div class="skill-info">
+                                    <h4 class="skill-name">Leadership & Public Relations</h4>
+                                </div>
+                            </div>
+
+                            <div class="skill-item" data-percent="90">
+                                <div class="skill-progress">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle class="skill-progress-bg" cx="50" cy="50" r="40"></circle>
+                                        <circle class="skill-progress-fill" cx="50" cy="50" r="40" data-skill-circle>
+                                        </circle>
+                                    </svg>
+                                    <div class="skill-progress-text">90%</div>
+                                </div>
+                                <div class="skill-info">
+                                    <h4 class="skill-name">Team Management & Teamwork</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Entrepreneurial Skills -->
+                        <div class="skill-category" data-category="entrepreneurial">
+                            <h3>Entrepreneurial Skills</h3>
+
+                            <div class="skill-item" data-percent="85">
+                                <div class="skill-progress">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle class="skill-progress-bg" cx="50" cy="50" r="40"></circle>
+                                        <circle class="skill-progress-fill" cx="50" cy="50" r="40" data-skill-circle>
+                                        </circle>
+                                    </svg>
+                                    <div class="skill-progress-text">85%</div>
+                                </div>
+                                <div class="skill-info">
+                                    <h4 class="skill-name">Market Research & Idea Validation</h4>
+                                </div>
+                            </div>
+
+                            <div class="skill-item" data-percent="100">
+                                <div class="skill-progress">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle class="skill-progress-bg" cx="50" cy="50" r="40"></circle>
+                                        <circle class="skill-progress-fill" cx="50" cy="50" r="40" data-skill-circle>
+                                        </circle>
+                                    </svg>
+                                    <div class="skill-progress-text">100%</div>
+                                </div>
+                                <div class="skill-info">
+                                    <h4 class="skill-name">Business Model Canvas</h4>
+                                </div>
+                            </div>
+
+                            <div class="skill-item" data-percent="95">
+                                <div class="skill-progress">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle class="skill-progress-bg" cx="50" cy="50" r="40"></circle>
+                                        <circle class="skill-progress-fill" cx="50" cy="50" r="40" data-skill-circle>
+                                        </circle>
+                                    </svg>
+                                    <div class="skill-progress-text">95%</div>
+                                </div>
+                                <div class="skill-info">
+                                    <h4 class="skill-name">Pitch Deck Creation</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section (Storytelling) -->
+            <section class="about-section" id="about">
+                <div class="container about-grid">
+
+                    <!-- Image (Parallax Target) -->
+                    <div class="about-image-wrapper">
+                        <div class="mask-container">
+                            <img src="images/about_speaking.png" alt="Karthikaa Kannan Speaking"
+                                class="about-portrait parallax-img">
+                        </div>
+                    </div>
+
+                    <!-- Content (Mask Reveals) -->
+                    <div class="about-content">
+                        <h2 class="section-title mask-reveal-x">About</h2>
+
+                        <div class="story-flow">
+
+                            <!-- Intro -->
+                            <div class="story-block">
+                                <div class="icon-3d"><i class="fas fa-bolt"></i></div>
+                                <p class="story-text mask-reveal-y">
+                                    Hey, I’m <strong>Karthikaa Kannan</strong> — a 17-year-old high schooler with a
+                                    <span class="highlight-text">billion-dollar mindset</span> and a relentless
+                                    passion
+                                    for creating, leading, and inspiring.
+                                </p>
+                            </div>
+
+                            <!-- TNI -->
+                            <div class="story-block">
+                                <div class="icon-3d"><i class="fas fa-fingerprint"></i></div>
+                                <p class="story-text mask-reveal-y">
+                                    I’m the <strong>Founder/CEO of The Narrative Identity (TNI)</strong> — a
+                                    visionary
+                                    branding firm helping brands express their stories with authenticity. What
+                                    started
+                                    as a solo vision is now a team of <span class="highlight-text">20+ skilled
+                                        students</span> united by craft and excellence.
+                                </p>
+                            </div>
+
+                            <!-- Mentor -->
+                            <div class="story-block">
+                                <div class="icon-3d"><i class="fas fa-chalkboard-teacher"></i></div>
+                                <p class="story-text mask-reveal-y">
+                                    Beyond brands, I <strong>mentor over 50 students</strong> in storytelling,
+                                    scriptwriting, and freelancing — guiding them to design lives of independence.
+                                    Ambition is a skill learned through consistency.
+                                </p>
+                            </div>
+
+                            <!-- NEXTEP -->
+                            <div class="story-block">
+                                <div class="icon-3d"><i class="fas fa-rocket"></i></div>
+                                <p class="story-text mask-reveal-y">
+                                    I’m building <strong>NEXTEP</strong>, a student-first platform empowering youth
+                                    to
+                                    learn, earn, and grow. With a community of <span class="highlight-text">500+
+                                        students</span> across India, we are moving toward new-age learning.
+                                </p>
+                            </div>
+
+                            <!-- Philosophy -->
+                            <div class="story-block">
+                                <div class="icon-3d"><i class="fas fa-heart"></i></div>
+                                <p class="story-text mask-reveal-y">
+                                    Success isn’t about money; it’s about <strong>meaning</strong>. Legacy is built
+                                    in
+                                    the change you create for others. Let’s learn together and grow together.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Services Section (Horizontal 3D Scroll) -->
+            <section class="section services-pin-wrapper" id="services">
+                <div class="container fluid-container">
+                    <h2 class="section-title fade-3d">Services</h2>
+                    <p class="section-sub fade-3d">Driven by purpose and fueled by learning, I've sharpened my abilities
+                        to make a difference through what I create.</p>
+
+                    <div class="services-track-container">
+                        <div class="services-track">
+                            <!-- Service 1: Video Editing -->
+                            <div class="service-card-3d">
+                                <div class="card-inner">
+                                    <div class="icon-sphere"><i class="fas fa-video"></i></div>
+                                    <h3 class="char-animate">Video<br>Editing</h3>
+                                    <p>High-impact video edits crafted with precision to engage your audience - perfect
+                                        for reels, promos, YouTube, and social media.</p>
+                                    <span class="card-num">01</span>
+                                </div>
+                            </div>
+                            <!-- Service 2: Graphic Designing -->
+                            <div class="service-card-3d">
+                                <div class="card-inner">
+                                    <div class="icon-sphere"><i class="fas fa-palette"></i></div>
+                                    <h3 class="char-animate">Graphic<br>Designing</h3>
+                                    <p>Eye-catching, brand-aligned visuals designed with tools like Canva and Adobe
+                                        Suite - ideal for marketing that truly stands out.</p>
+                                    <span class="card-num">02</span>
+                                </div>
+                            </div>
+                            <!-- Service 3: Social Media -->
+                            <div class="service-card-3d">
+                                <div class="card-inner">
+                                    <div class="icon-sphere"><i class="fas fa-share-alt"></i></div>
+                                    <h3 class="char-animate">Social Media<br>Management</h3>
+                                    <p>End-to-end management that builds community, boosts engagement, and grows your
+                                        brand through smart strategies.</p>
+                                    <span class="card-num">03</span>
+                                </div>
+                            </div>
+                            <!-- Service 4: Content Writing -->
+                            <div class="service-card-3d">
+                                <div class="card-inner">
+                                    <div class="icon-sphere"><i class="fas fa-pen-nib"></i></div>
+                                    <h3 class="char-animate">Content<br>Writing</h3>
+                                    <p>Compelling, audience-driven content that informs, inspires, and converts - from
+                                        blogs to website copy.</p>
+                                    <span class="card-num">04</span>
+                                </div>
+                            </div>
+                            <!-- Service 5: Content Creation -->
+                            <div class="service-card-3d">
+                                <div class="card-inner">
+                                    <div class="icon-sphere"><i class="fas fa-magic"></i></div>
+                                    <h3 class="char-animate">Content<br>Creation</h3>
+                                    <p>Original, platform-ready content created for maximum impact - tailored to
+                                        specific brand voices and optimized for reach.</p>
+                                    <span class="card-num">05</span>
+                                </div>
+                            </div>
+                            <!-- Service 6: Personal Branding -->
+                            <div class="service-card-3d">
+                                <div class="card-inner">
+                                    <div class="icon-sphere"><i class="fas fa-user-astronaut"></i></div>
+                                    <h3 class="char-animate">Personal<br>Branding</h3>
+                                    <p>Crafting impactful personal brands through strategic content, consistent design,
+                                        and authentic storytelling.</p>
+                                    <span class="card-num">06</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Journey Section (Horizontal Scroll) -->
+            <section class="journey-section-pin" id="journey">
+                <div class="container container-fluid">
+                    <h2 class="section-title fade-3d" style="margin-left: 5vw;">My Journey</h2>
+                    <p class="section-sub fade-3d" style="margin-left: 5vw; max-width: 600px;">
+                        From starting at 13 to building ventures today — a timeline of execution.
+                    </p>
+
+                    <div class="journey-track-wrapper">
+                        <div class="journey-track">
+
+                            <!-- Card 1 -->
+                            <div class="journey-card">
+                                <div class="j-year">2021 - Present</div>
+                                <h3 class="j-title">Video Editor &<br>Graphic Designer</h3>
+                                <p class="j-desc">
+                                    I've been designing and editing since I was 13 - turning creativity into
+                                    client-ready content through internships and freelance projects.
+                                    I've delivered 100+ projects across various niches, always focused on quality and
+                                    impact.
+                                </p>
+                                <span class="j-num">01</span>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="journey-card">
+                                <div class="j-year">2023 - Present</div>
+                                <h3 class="j-title">Social Media<br>Management</h3>
+                                <p class="j-desc">
+                                    Helping brands grow their digital presence through strategic marketing.
+                                    From planning content to engaging communities, I've worked across platforms to boost
+                                    visibility and drive real audience engagement.
+                                </p>
+                                <span class="j-num">02</span>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="journey-card">
+                                <div class="j-year">2025 - Present</div>
+                                <h3 class="j-title">Entrepreneur<br>& Leader</h3>
+                                <p class="j-desc">
+                                    As a young entrepreneur, I've been building since my teens.
+                                    I'm the <strong>Brand Ambassador of CODLYNX</strong> - A Hybrid Agency.
+                                    Every venture has taught me how to think big, move fast, and solve real problems.
+                                </p>
+                                <span class="j-num">03</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MOTION UI SECTIONS -->
+
+            <!-- 1. Horizontal Achievements (Parallax Stream) -->
+            <section class="section" id="achievements-stream" style="background:#050505; color:white; overflow:hidden;">
+                <div class="h-scroll-container">
+                    <div class="h-header">
+                        <h2 class="h-title">Milestones</h2>
+                        <span class="h-subtitle">A journey of impact & code.</span>
+                    </div>
+
+                    <!-- Horizontal Track -->
+                    <div class="h-track">
+                        <!-- Items injected via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. Testimonials (Velocity Marquee) -->
+            <section class="section" id="testimonials-velocity"
+                style="background:#0e0e0e; padding:10rem 0; overflow:hidden;">
+                <div class="v-marquee-wrapper">
+                    <!-- Row 1 -->
+                    <div class="v-marquee" id="v-marquee-1">
+                        <!-- Items injected via JS -->
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="v-marquee" id="v-marquee-2" style="margin-top:2rem;">
+                        <!-- Items injected via JS -->
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Contact Section Removed -->
+
+
+        </main>
+
+        <!-- Premium Footer -->
+        <footer class="premium-footer">
+            <div class="container">
+
+                <!-- Main Footer Content -->
+                <div class="footer-main">
+                    <div class="footer-cta">
+                        <h2 class="footer-heading">Ready to collaborate?</h2>
+                        <p class="footer-tagline">Let's create something extraordinary together.</p>
+                        <a href="mailto:karthikaa@example.com" class="footer-email-btn">
+                            <span>Get in Touch</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Footer Links Grid -->
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#journey">Journey</a></li>
+                            <li><a href="#achievements">Achievements</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-col">
+                        <h4>Connect</h4>
+                        <ul>
+                            <li><a href="#" target="_blank">LinkedIn</a></li>
+                            <li><a href="#" target="_blank">GitHub</a></li>
+                            <li><a href="#" target="_blank">Twitter</a></li>
+                            <li><a href="#" target="_blank">Instagram</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Footer Bottom -->
+                <div class="footer-bottom">
+                    <p>&copy; 2025 Karthikaa Kannan. Crafted with precision.</p>
+                    <div class="footer-legal">
+                        <a href="#">Privacy</a>
+                        <span>·</span>
+                        <a href="#">Terms</a>
+                    </div>
+                </div>
+
+            </div>
+        </footer>
+
+        <!-- Scripts (Cache Busted) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+        <script src="js/main.v3.js?v=FINAL"></script>
+
+    </body>
+
+</html>

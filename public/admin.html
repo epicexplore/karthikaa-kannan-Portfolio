@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Karthikaa Kannan</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <header>
+                <h1>Admin Panel</h1>
+                <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Site</a>
+            </header>
+
+            <nav class="main-nav">
+                <a href="#" class="nav-link active" data-tab="achievements"><i class="fas fa-trophy"></i>
+                    Achievements</a>
+                <a href="#" class="nav-link" data-tab="testimonials"><i class="fas fa-comments"></i> Testimonials</a>
+                <a href="#" class="nav-link" data-tab="socials"><i class="fas fa-share-alt"></i> Socials</a>
+                <a href="#" class="nav-link" data-tab="users"><i class="fas fa-users"></i> Users</a>
+                <a href="#" class="nav-link" data-tab="settings"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#" class="nav-link logout-link" onclick="logout()"><i class="fas fa-sign-out-alt"></i>
+                    Logout</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+
+            <!-- Achievements Section -->
+            <section id="achievements-section" class="content-section active">
+                <div class="section-header">
+                    <h2>Achievements</h2>
+                    <button class="btn-primary" onclick="openModal('achievement')">+ Add New</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th width="80">Year</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th width="80">Icon</th>
+                                <th width="80">Link</th>
+                                <th width="120">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="achievements-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Testimonials Section -->
+            <section id="testimonials-section" class="content-section" style="display:none;">
+                <div class="section-header">
+                    <h2>Testimonials</h2>
+                    <button class="btn-primary" onclick="openModal('testimonial')">+ Add New</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Message</th>
+                                <th width="120">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="testimonials-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Socials Section -->
+            <section id="socials-section" class="content-section" style="display:none;">
+                <div class="section-header">
+                    <h2>Social Media</h2>
+                    <button class="btn-primary" onclick="openModal('social')">+ Add New</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Platform</th>
+                                <th>URL</th>
+                                <th>Icon</th>
+                                <th width="120">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="socials-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Users Section -->
+            <section id="users-section" class="content-section" style="display:none;">
+                <div class="section-header">
+                    <h2>User Management</h2>
+                    <button class="btn-primary" onclick="openModal('user')">+ Add New</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Created At</th>
+                                <th width="120">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings-section" class="content-section" style="display:none;">
+                <div class="section-header">
+                    <h2>SEO Settings</h2>
+                    <button class="btn-primary" onclick="saveSettings()">Save Changes</button>
+                </div>
+                <div class="settings-form-container">
+                    <form id="settings-form">
+                        <div class="form-group-full">
+                            <label>Site Title</label>
+                            <input type="text" id="seo_title" name="seo_title" class="form-control-dark">
+                        </div>
+                        <div class="form-group-full">
+                            <label>Meta Description</label>
+                            <textarea id="seo_description" name="seo_description" rows="3"
+                                class="form-control-dark"></textarea>
+                        </div>
+                        <div class="form-group-full">
+                            <label>Keywords (comma separated)</label>
+                            <textarea id="seo_keywords" name="seo_keywords" rows="2"
+                                class="form-control-dark"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-content">
+            <h2 id="modal-title" style="margin-bottom:1.5rem;">Add Item</h2>
+            <form id="admin-form">
+                <div id="dynamic-fields">
+                    <!-- Injected by JS -->
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="cancel-modal">Cancel</button>
+                    <button type="submit" class="btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+
+</html>

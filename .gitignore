@@ -1,0 +1,14 @@
+node_modules/
+.env
+.DS_Store
+Thumbs.db
+*.log
+*.zip
+*.db
+!db/portfolio.db 
+db/portfolio.db
+# Note: Usually we don't commit the DB if it contains local data, but for a simplified workflow we might want the schema. 
+# However, for production it's better to let it be created or seed it. 
+# Let's exclude the actual DB file to prevent conflicts, but keep the folder.
+public/node_modules/
+.vscode/
