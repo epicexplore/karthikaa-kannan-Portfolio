@@ -125,14 +125,18 @@
 /* Responsive */
 @media (max-width: 768px) {
     .tag-cloud-container {
-        width: 100vw;
-        height: 100vw;
-        max-width: 400px;
-        max-height: 400px;
+        width: 90vw;
+        height: 90vw;
+        max-width: 350px;
+        max-height: 350px;
     }
 
     .tag-pill {
         padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+    }
+
+    .skills-header h2 {
+        font-size: 2.2rem;
     }
 }

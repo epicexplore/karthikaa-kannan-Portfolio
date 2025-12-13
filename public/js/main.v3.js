@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     init3DTilt();
     initScrollAnimations();
     initSkillsAnimations();
+    initMobileMenu(); // New Mobile Menu Logic
 
     // Dynamic Features
     loadSEO();
@@ -732,22 +733,29 @@ function initScrollAnimations() {
     const cursor = document.getElementById('cursor');
     const cursorBlur = document.getElementById('cursor-blur');
 
-    document.addEventListener('mousemove', (e) => {
-        // Move Custom Cursor
-        if (cursor) gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, ease: 'power2.out' });
-        if (cursorBlur) gsap.to(cursorBlur, { x: e.clientX, y: e.clientY, duration: 0.8, ease: 'power3.out' }); // Laggy Blur
+    // Only enable custom cursor on non-touch devices
+    if (window.matchMedia("(pointer: fine)").matches) {
+        document.addEventListener('mousemove', (e) => {
+            // Move Custom Cursor
+            if (cursor) gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, ease: 'power2.out' });
+            if (cursorBlur) gsap.to(cursorBlur, { x: e.clientX, y: e.clientY, duration: 0.8, ease: 'power3.out' }); // Laggy Blur
 
-        // Holographic Card Effect
-        document.querySelectorAll('.service-card-3d').forEach(card => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            // Holographic Card Effect
+            document.querySelectorAll('.service-card-3d').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
 
-            // Set CSS Variable for the radial gradient
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
+                // Set CSS Variable for the radial gradient
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
         });
-    });
+    } else {
+        // Hide cursor elements on touch devices to be safe
+        if (cursor) cursor.style.display = 'none';
+        if (cursorBlur) cursorBlur.style.display = 'none';
+    }
 
     // Scramble Text Effect on Hover
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -1124,4 +1132,42 @@ async function fetchAchievements() {
     } catch (error) {
         console.error("Error fetching achievements:", error);
     }
+}
+
+// =========================================
+// 8. MOBILE MENU LOGIC
+// =========================================
+function initMobileMenu() {
+    const burger = document.querySelector('.mobile-toggle');
+    const nav = document.querySelector('.nav-links');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    if (!burger || !nav) return;
+
+    burger.addEventListener('click', () => {
+        // Toggle Nav
+        nav.classList.toggle('nav-active');
+        document.body.classList.toggle('no-scroll');
+
+        // Toggle Icon
+        const icon = burger.querySelector('i');
+        if (icon) {
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        }
+    });
+
+    // Close on link click
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            nav.classList.remove('nav-active');
+            document.body.classList.remove('no-scroll');
+            // Reset Icon
+            const icon = burger.querySelector('i');
+            if (icon) {
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            }
+        });
+    });
 }
